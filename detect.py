@@ -21,7 +21,7 @@ def detect(save_img=False):
 
     # Directories
     save_dir = Path(increment_path(Path(opt.project) / opt.name, exist_ok=opt.exist_ok))  # increment run
-    (save_dir / if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
+    (save_dir if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
 
     # Initialize
     set_logging()
@@ -86,7 +86,7 @@ def detect(save_img=False):
 
             p = Path(p)  # to Path
             save_path = str(save_dir / p.name)  # img.jpg
-            txt_path = str(save_dir / 'labels' / p.stem) + ('' if dataset.mode == 'image' else f'_{frame}')  # img.txt
+            txt_path = str(save_dir / p.stem) + ('' if dataset.mode == 'image' else f'_{frame}')  # img.txt
             s += '%gx%g ' % img.shape[2:]  # print string
             gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
             if len(det):
