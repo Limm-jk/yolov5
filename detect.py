@@ -21,7 +21,7 @@ def detect(save_img=False):
 
     # Directories
     save_dir = Path(increment_path(Path(opt.project) / opt.name, exist_ok=opt.exist_ok))  # increment run
-    (save_dir / 'labels' if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
+    (save_dir / if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
 
     # Initialize
     set_logging()
@@ -47,7 +47,7 @@ def detect(save_img=False):
         cudnn.benchmark = True  # set True to speed up constant image size inference
         dataset = LoadStreams(source, img_size=imgsz)
     else:
-        save_img = True
+        save_img = False
         dataset = LoadImages(source, img_size=imgsz)
 
     # Get names and colors
@@ -146,8 +146,8 @@ if __name__ == '__main__':
     parser.add_argument('--weights', nargs='+', type=str, default='yolov5s.pt', help='model.pt path(s)')
     parser.add_argument('--source', type=str, default='data/images', help='source')  # file/folder, 0 for webcam
     parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
-    parser.add_argument('--conf-thres', type=float, default=0.25, help='object confidence threshold')
-    parser.add_argument('--iou-thres', type=float, default=0.45, help='IOU threshold for NMS')
+    parser.add_argument('--conf-thres', type=float, default=0.4, help='object confidence threshold')
+    parser.add_argument('--iou-thres', type=float, default=0.6, help='IOU threshold for NMS')
     parser.add_argument('--device', default='', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
     parser.add_argument('--view-img', action='store_true', help='display results')
     parser.add_argument('--save-txt', action='store_true', help='save results to *.txt')
