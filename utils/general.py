@@ -79,7 +79,7 @@ def check_requirements(file='requirements.txt'):
     import pkg_resources
     requirements = pkg_resources.parse_requirements(Path(file).open())
     requirements = [x.name + ''.join(*x.specs) if len(x.specs) else x.name for x in requirements]
-    pkg_resources.require(requirements)  # DistributionNotFound or VersionConflict exception if requirements not met
+#     pkg_resources.require(requirements)  # DistributionNotFound or VersionConflict exception if requirements not met
 
 
 def check_img_size(img_size, s=32):
