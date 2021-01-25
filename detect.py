@@ -90,20 +90,23 @@ def detect(save_img=False):
             txt_path = str(save_dir / p.stem) + ('' if dataset.mode == 'image' else f'_{frame}')  # img.txt
             s += '%gx%g ' % img.shape[2:]  # print string
             gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
+            
+            dic = {"With_Mask":0,"Without_Mask":0,"Incorrect_Mask":0}
+            
             if len(det):
                 # Rescale boxes from img_size to im0 size
                 det[:, :4] = scale_coords(img.shape[2:], det[:, :4], im0.shape).round()
 
                 # Print results
-                dic = {"With_Mask":0,"Without_Mask":0,"Incorrect_Mask":0}
+                
                 for c in det[:, -1].unique():
                     n = (det[:, -1] == c).sum()  # detections per class
                     s += f'{n} {names[int(c)]}s, '  # add to string
                     dic[names[int(c)]] = int(n)
 
-                # Write results
-                with open(txt_path + '.json', 'a') as f:
-                    json.dump(dic, f)
+            # Write results
+            with open(txt_path + '.json', 'a') as f:
+                json.dump(dic, f)
 
             # Print time (inference + NMS)
             print(f'{s}Done. ({t2 - t1:.3f}s)')
